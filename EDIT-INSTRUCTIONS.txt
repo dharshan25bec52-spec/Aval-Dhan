@@ -1,0 +1,13 @@
+EDITING THE SONG WEBSITE
+
+1. Extract this ZIP completely to a folder.
+2. Open index.html in a text editor such as Notepad or VS Code.
+3. Change only the words between the HTML tags (for example, the title, paragraph text, lyrics, and labels).
+4. Do not rename or remove these files:
+   - Aval-Thaan-My-Love.mp3
+   - song-data.js
+   - cover.jpg
+   - album.jpg
+5. Save index.html, then double-click it to test it in Chrome.
+
+The password on the opening screen is: azhagii
