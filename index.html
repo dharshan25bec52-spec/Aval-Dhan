@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Keep every relative asset beside this file, including when opened directly in Chrome. -->
+  <base href="./" />
+  <meta name="theme-color" content="#07090e" />
+  <title>A Special Song For You ♡</title>
+  <meta name="description" content="A romantic gift crafted with unconditional love." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Tamil:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --panel: #111827;
+      --pink: #ff9bb6;
+      --peach: #ffd1bd;
+      --text: #fff6f4;
+      --muted: #c6c2d0;
+      --line: #343447;
+      --font-serif: "Cormorant Garamond", Georgia, serif;
+      --font-tamil: "Noto Serif Tamil", Georgia, serif;
+      --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(ellipse at 50% -10%, #38213c 0, transparent 50%), var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 0 16px;
+    }
+    button, input { font: inherit; }
+    .wrap {
+      width: min(780px, 100%);
+      margin: auto;
+      padding: 20px 0 50px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--pink);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,155,182,0.15);
+      margin-bottom: 30px;
+    }
+    .heart-tap-btn {
+      background: rgba(255,155,182,0.12);
+      border: 1px solid rgba(255,155,182,0.3);
+      color: var(--pink);
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .heart-tap-btn:hover { background: rgba(255,155,182,0.22); }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--pink);
+      font-weight: 700;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-weight: 500;
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.15;
+      margin: 10px 0;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 500;
+      line-height: 1.25;
+      margin: 6px 0 14px;
+    }
+    .sub {
+      color: var(--muted);
+      max-width: 620px;
+      font-weight: 300;
+      margin: 0 auto 20px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid #72536b;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .btn.primary {
+      background: linear-gradient(110deg, var(--pink), var(--peach));
+      color: #21131d;
+      border-color: transparent;
+      box-shadow: 0 10px 25px rgba(255,155,182,0.25);
+    }
+    .btn.primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn:active { transform: scale(0.98); }
+    .screen {
+      min-height: 75vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 30px 0;
+    }
+    .gate-card {
+      width: min(440px, 100%);
+      padding: 36px 28px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(18, 22, 34, 0.92);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6);
+      backdrop-filter: blur(16px);
+    }
+    .gate-card input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid #665067;
+      background: #080c15;
+      color: white;
+      margin: 14px 0 6px;
+      font-size: 16px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .gate-card input:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,155,182,0.2); }
+    .status-msg {
+      min-height: 24px;
+      color: var(--pink);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .hint-box {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .hidden { display: none !important; }
+    
+    /* Hero card with static romantic image */
+    .hero-banner {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid #4a3447;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.7);
+      background: #090d18;
+      margin-bottom: 36px;
+    }
+    .hero-banner img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.88) contrast(1.05);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7,9,14,0.96) 0%, rgba(7,9,14,0.4) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(20px, 4vw, 36px);
+    }
+    .hero-top-actions {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: flex;
+      gap: 8px;
+    }
+    .hero-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(0,0,0,0.65);
+      border: 1px solid rgba(255,155,182,0.3);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--peach);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      backdrop-filter: blur(8px);
+    }
+    
+    /* Panels */
+    .panel {
+      background: linear-gradient(145deg, rgba(21, 27, 42, 0.94), rgba(13, 18, 30, 0.94));
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: clamp(24px, 4vw, 38px);
+      margin-bottom: 32px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .desc-text {
+      font-size: 17px;
+      font-weight: 300;
+      color: #ded9e5;
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+    
+    /* Audio Player */
+    .player-wrap {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .player-cover {
+      width: 140px;
+      aspect-ratio: 1/1;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid rgba(255,155,182,0.3);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+    .track-title {
+      font-family: var(--font-tamil);
+      font-size: 26px;
+      font-weight: 600;
+      color: #fff6f4;
+    }
+    .track-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .wave-bars {
+      display: flex;
+      gap: 4px;
+      height: 22px;
+      align-items: flex-end;
+      margin-bottom: 12px;
+    }
+    .wave-bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--pink), var(--peach));
+      border-radius: 4px;
+      height: 15%;
+      transition: height 0.25s ease;
+      opacity: 0.7;
+    }
+    .wave-bars.active .wave-bar {
+      animation: bounceWave 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes bounceWave {
+      0% { height: 15%; }
+      100% { height: 95%; }
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(6) { animation-delay: 0.5s; }
+    .wave-bar:nth-child(7) { animation-delay: 0.35s; }
+    .wave-bar:nth-child(8) { animation-delay: 0.1s; }
+    
+    .scrub-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .scrub-row input {
+      flex: 1;
+      accent-color: var(--pink);
+      cursor: pointer;
+    }
+    .time-txt {
+      font-size: 12px;
+      font-family: monospace;
+      color: var(--muted);
+      min-width: 36px;
+    }
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+    /* Lyrics */
+    .lyrics-container {
+      font-family: var(--font-tamil);
+      max-width: 680px;
+      margin: 24px auto 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .stanza {
+      background: rgba(15, 20, 34, 0.7);
+      border: 1px solid #2b2f42;
+      border-radius: 18px;
+      padding: 20px;
+      white-space: pre-line;
+      line-height: 2.1;
+      font-size: 17px;
+      color: #f7eef2;
+    }
+    .stanza.highlight {
+      border: 2px solid rgba(255,155,182,0.5);
+      background: linear-gradient(135deg, rgba(255,155,182,0.14), rgba(255,209,189,0.08));
+      box-shadow: 0 0 35px rgba(255,155,182,0.2);
+      color: #fff8fb;
+      font-size: 19px;
+      font-weight: 500;
+    }
+    
+    /* Highlight & dialogue section */
+    .quote-box {
+      font-family: var(--font-tamil);
+      font-size: clamp(17px, 3vw, 23px);
+      line-height: 1.7;
+      color: #fff6f8;
+      text-align: center;
+      padding: 16px 8px;
+      border-top: 1px solid rgba(255,155,182,0.3);
+      border-bottom: 1px solid rgba(255,155,182,0.3);
+      margin: 18px 0;
+    }
+    .love-letter {
+      font-size: 15px;
+      color: #e5dfec;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .love-letter p { margin-bottom: 12px; }
+    
+    /* Song Details Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .meta-item {
+      background: rgba(11, 14, 26, 0.7);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .meta-item span {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .meta-item strong {
+      font-size: 15px;
+      color: #fff5f2;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 10px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer .last {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 5vw, 44px);
+      color: var(--pink);
+      margin: 12px 0;
+    }
+    
+    /* Floating hearts animation */
+    .floating {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      animation: floatUp 3.4s ease-out forwards;
+      font-size: 20px;
+    }
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.6); }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      to { opacity: 0; transform: translateY(-160px) scale(1.3); }
+    }
+    
+    @media(max-width: 640px) {
+      .player-wrap { grid-template-columns: 1fr; text-align: center; }
+      .player-cover { margin: 0 auto; width: 180px; }
+      .actions-row { justify-content: center; }
+      .hero-overlay { padding: 18px; }
+      .hero-banner img { aspect-ratio: 4/3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <span>A song made just for you</span>
+      <button class="heart-tap-btn" id="headerHeartBtn">♡ Send Love</button>
+    </div>
+
+    <!-- GATE SCREEN -->
+    <section id="gateScreen" class="screen">
+      <div class="gate-card">
+        <div style="font-size: 38px; color: var(--pink); margin-bottom: 10px;">♡</div>
+        <div class="eyebrow">A Special Gift Awaits</div>
+        <h1>One Key to Enter <span style="color:var(--pink)">♡</span></h1>
+        <p class="sub">Enter the special passcode to unlock your gift.</p>
+        
+        <form id="gateForm">
+          <input id="passcodeInput" type="password" placeholder="Enter the passcode…" autocomplete="off" required autofocus />
+          <button class="btn primary" style="width: 100%; margin-top: 10px;" type="submit">Unlock My Gift ♡</button>
+          <div class="hint-box">Hint: It's the sweetest name I call you</div>
+          <div class="status-msg" id="gateStatus"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- GIFT SCREEN (UNLOCKED) -->
+    <div id="giftScreen" class="hidden">
+      <!-- HERO BANNER (ROMANTIC STATIC COVER IMAGE REPLACING VIDEO) -->
+      <div class="hero-banner">
+        <img src="./cover.jpeg" alt="A romantic couple holding hands at sunset" />
+        <div class="hero-overlay">
+          <div class="eyebrow">Made with Love, for the feelings I can't always express</div>
+          <h1>A Song for Us <span style="color:var(--pink)">♡</span></h1>
+          <p class="sub" style="margin: 0; color: #f0e8f2;">
+            Some feelings are easier to sing than say. This song is for you.
+          </p>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION PANEL -->
+      <section class="panel">
+        <div class="eyebrow" style="margin-bottom: 8px;">Before You Press Play</div>
+        <h2>A Gift From the Depth of My Heart</h2>
+        <p class="desc-text">
+          I wrote this song for you because sometimes I find it hard to say everything I feel. We started as friends, talking and laughing about little things, and somewhere along the way, you became someone really special to me.
+</p>
+        <p class="desc-text">
+        Every line comes from what I feel for you. Your smile, your voice, our little moments, and even the times when I miss you — all of them mean so much to me. I just wanted to put some of my feelings into this song and share them with you.
+</p>
+        <p class="desc-text" style="color: var(--peach); font-style: italic;">
+          “I hope this song helps you feel how much I love you”
+        </p>
+      </section>
+
+      <!-- AUDIO PLAYER PANEL & DOWNLOAD -->
+      <section class="panel" id="playerSection">
+        <div class="eyebrow" style="margin-bottom: 8px;">Listen to it whenever you miss me, azhagii. </div>
+        <h2>The Song I Wrote For You</h2>
+
+        <div class="player-wrap">
+          <img class="player-cover" src="./album.png" alt="Album Cover" />
+          <div>
+            <div class="track-title">அவள் தான் ♡</div>
+            <div class="track-sub">A romantic melody · Lyrics written by me with unconditional love</div>
+            
+            <div class="wave-bars" id="waveBars">
+              <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+              <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+              <div class="wave-bar"></div><div class="wave-bar"></div>
+            </div>
+
+            <div class="scrub-row">
+              <span class="time-txt" id="currTime">0:00</span>
+              <input type="range" id="seekSlider" value="0" min="0" max="100" />
+              <span class="time-txt" id="totTime">0:00</span>
+            </div>
+
+            <div class="actions-row">
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn primary" id="playBtn" type="button">▶ Play Song</button>
+                <button class="btn" id="downloadSongBtn" type="button">↓ Download MP3</button>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 13px;">
+                <span>Volume</span>
+                <input type="range" id="volSlider" min="0" max="1" step="0.05" value="0.9" style="width: 80px;" />
+              </div>
+            </div>
+            <div class="status-msg" id="downloadStatus"></div>
+          </div>
+        </div>
+
+        <audio id="audioElement" preload="metadata">
+          <source src="./Aval-Thaan-My-Love.mp3" type="audio/mpeg" />
+          Your browser does not support audio playback.
+        </audio>
+      </section>
+
+      <!-- LYRICS PANEL -->
+      <section class="panel">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div class="eyebrow">Every Word Is From My Heart</div>
+          <h2>Lyrics for You </h2>
+          <p class="sub">I wrote these words thinking about us. Take all the time you need with them.</p>
+          <div style="display: flex; justify-content: center; gap: 10px; margin-top: 14px;">
+            <button class="btn" id="toggleLyricsBtn" type="button" aria-expanded="true" aria-controls="lyricsTextContainer">⌃ Hide Lyrics</button>
+            <button class="btn" id="copyLyricsBtn" type="button">Copy Lyrics ♡</button>
+          </div>
+          <div class="status-msg" id="copyStatus"></div>
+        </div>
+
+        <div class="lyrics-container" id="lyricsTextContainer">
+          <div class="stanza">முதல் முறை உன்னைப் பார்த்தபோது,
+இத்தனை அழகாய் ஒரு காதல் கதை தொடங்குமென்று தெரியவில்லையே…
+அன்று ஒரு நட்பாய் வந்த நீ,
+என் வாழ்வின் அர்த்தமாவாய் என்று நினைக்கவில்லையே…</div>
+
+          <div class="stanza">எப்போது நீ என் உலகமானாய்,
+எனக்கே தெரியலையே…
+உன்னைப் பார்க்கும் ஒவ்வொரு முறையும்,
+முதல் பார்வை போல மனசு மலருதே…</div>
+
+          <div class="stanza">உன் சோகம் கொஞ்சம் பார்த்தபோது,
+உன் அருகில் இருக்கத் தோணிச்சு…
+உன் மனசு கொஞ்சம் சிரிக்கும்போது,
+என் மனசும் சந்தோஷமாச்சு…</div>
+
+          <div class="stanza">நட்புன்னு தொடங்கிய நம்ம கதையில்,
+காதல் எப்போது வந்ததோ…
+தினமும் பேசும் சின்னச் சின்ன பேச்சில்,
+என் இதயம் உன்னிடம் சேர்ந்ததோ…</div>
+
+          <div class="stanza">உன்னோடு பேசும் நேரமெல்லாம்,
+உலகமே மறந்து போகுதே…
+எதுவுமே பேசாத நேரத்திலும்,
+உன் நினைவு பேசிக்கொண்டே இருக்குதே…</div>
+
+          <div class="stanza">உன்னாலே என் நாட்கள் அழகாகுதே,
+உன் சிரிப்பாலே என் மனசு நிறையுதே…
+எத்தனை முகங்கள் தினம் பார்த்தாலும்,
+என் கண்கள் தேடுவது உன்னைத்தானே…</div>
+
+          <div class="stanza">கோபம் வந்தாலும் நீ வேணும்,
+தூரம் போனாலும் நீ வேணும்…
+என் வாழ்க்கை எப்படி மாறினாலும்,
+என் பக்கத்தில் நீதான் வேணும்…</div>
+
+          <div class="stanza">உன்னை நேசிக்கக் காரணம் கேட்காதே,
+வார்த்தைகளில் அதை அடக்க முடியாதே…
+நீ நீயாகவே இருந்தால் போதும்,
+என் மனசுக்கு வேறெதுவும் வேண்டாமே…</div>
+
+          <div class="stanza">“என்னைக் காதலிக்கிறாயா?” என்று கேட்டேனே கொஞ்சம் முட்டாள்தனமா…
+பதில் தேடும் விழிகளோடு, வெட்கத்தில் நீ நின்றாயே…</div>
+
+          <div class="stanza">சொல்ல வார்த்தைகள் கிடைக்காமல்,
+சின்ன சிரிப்பில் நீ மறைந்தாயே…
+“சரியா சொல்லு…” என்ற அந்த நொடி,
+என் காதல் வார்த்தை தேடியதே…</div>
+
+          <div class="stanza">“நான் உன்னைக் காதலிக்கிறேன்… நீ?”
+என்று என் மனதைத் திறந்தபோது,
+நீ தந்த அந்தச் சின்னப் பதிலில்,
+என் உலகம் முழுதும் மலர்ந்ததடி…</div>
+
+          <div class="stanza">உன்னாலே என் நாட்கள் அழகாகுதே,
+உன் சிரிப்பாலே என் மனசு நிறையுதே…
+எத்தனை முகங்கள் தினம் பார்த்தாலும்,
+என் கண்கள் தேடுவது உன்னைத்தானே…</div>
+
+          <div class="stanza">கோபம் வந்தாலும் நீ வேணும்,
+தூரம் போனாலும் நீ வேணும்…
+என் வாழ்க்கை எப்படி மாறினாலும்,
+என் பக்கத்தில் நீதான் வேணும்…</div>
+
+          <div class="stanza">சில நேரம் சண்டைகள்,
+சில நேரம் கோபங்கள்,
+சில நேரம் பேசாமல் போன நொடிகள்…
+அத்தனையும் தாண்டி என் மனசு சொல்லும்,
+ஒரே பதில் — “அவள் தான்…”</div>
+
+          <div class="stanza">சில சிரிப்புகள், சில அழுகைகள்,
+சில புரியாத மௌனங்கள்…
+நான் தொலைந்தாலும், திரும்பி வர என் மனசு தேடும் ஒரே இடம் —
+உன்னிடம் தான்…</div>
+
+          <div class="stanza">உன்னாலே என் நாட்கள் அழகாகுதே,
+உன் சிரிப்பாலே என் மனசு நிறையுதே…
+எத்தனை மாற்றங்கள் வந்தாலும்,
+என் மனசு தேர்ந்தெடுப்பது உன்னைத்தானே…</div>
+
+          <div class="stanza">உன் பெயர் கேட்டாலே மனசு சிரிக்குதே,
+உன் நினைவு வந்தாலே உலகம் மறக்குதே…
+எத்தனை தூரம் போனாலும்,
+என் மனசு உன்னைத் தேடுதே…</div>
+
+          <div class="stanza highlight">என் நாளின் தொடக்கமும் நீதானே,
+என் இரவின் நினைவும் நீதானே…
+என்னை நான் மறந்தாலும் கூட,
+உன்னை மட்டும் மறக்க முடியாதே…</div>
+
+          <div class="stanza">அன்று நட்பாய் வந்த நீ,
+இன்று என் உயிரோடு கலந்தாயே…</div>
+
+          <div class="stanza">எப்போது காதலானதென்று தெரியவில்லை,
+ஆனால் உன்னை இழக்க மட்டும் மனம் விரும்பவில்லையே…</div>
+
+          <div class="stanza">இன்று என் மனசுக்குத் தெரியும்,
+என் சந்தோஷம் எங்கேயென்று…</div>
+
+          <div class="stanza">என் காதல் பெரிய கவிதையில்லை…
+உன்னைத் தேடும் என் மனசு,
+தினமும் சொல்லும்
+ஒரு சின்ன வார்த்தை…</div>
+
+          <div class="stanza" style="border-color: var(--pink); font-size: 19px; color: var(--peach);">“உன்னைக் காதலிக்கிறேன்…
+இன்னைக்கும், எப்போதும்…”</div>
+        </div>
+      </section>
+
+      <!-- HIGHLIGHTED DIALOGUE & LETTER SECTION -->
+      <section class="panel" style="border: 2px solid rgba(255,155,182,0.4);">
+        <div class="eyebrow" style="text-align: center;">Carry These Words With You</div>
+        <div class="quote-box">
+          என் நாளின் தொடக்கமும் நீதானே,<br />
+          என் இரவின் நினைவும் நீதானே…<br />
+          என்னை நான் மறந்தாலும் கூட,<br />
+          உன்னை மட்டும் மறக்க முடியாதே…
+        </div>
+
+        <div class="love-letter">
+          <p>My dearest Azhagii,</p>
+          <p>
+              If you're reading this, I just want you to know how much you mean to me.
+        </p>
+          <p>
+               Sometimes, I have so many things I want to tell you, but I can't find the right words. That's why I made this for you. I wanted to do something a little different, something that could hold all the feelings I don't always know how to express.
+       </p>
+          <p>
+                 Out of all the people I could have met in this world, I'm so so glad I met you. We started as friends, and now you're someone I can't imagine my days without. Even the smallest things about you have found a special place in my heart.
+    </p>
+    <p>
+     I know I may not always express my love perfectly, and sometimes words alone may not be enough to show you what you mean to me. But every little thing I have made for you comes from a place in my heart that belongs to you. I just wish you could see yourself through my eyes, even for a moment, and understand why you mean so much to me.
+    </p>
+    <p>
+     Whenever you listen to this song or read these words, I hope you feel the love behind them. You don't have to say anything or find the right words in return. I just want you to smile and know that you're loved, not only on the special days, but on the ordinary days too.
+    </p>
+    <p>
+     I love you, Azhagii. In more ways than words could ever explain, and even this song holds only a little of what my heart feels for you
+    </p>
+    <p>
+     And if there's one thing I wish for you to remember, it's that meeting you was one of the most beautiful things that ever happened to me. No matter how many times I could start over, I'd still hope to find you.
+    </p>
+    <p>
+     I'm really happy that, out of everyone in this world, I got to meet you and call you mine.
+    </p>
+          <p style="color: var(--peach); font-weight: 500;">
+            I love you unconditionally — today, tomorrow, and forever.
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 24px;">
+          <button class="btn primary" id="feelLoveBtn" type="button">Tap If You Feel My Love ♡</button>
+          <div class="status-msg" id="secretNote"></div>
+        </div>
+      </section>
+
+      <!-- SONG DETAILS -->
+      <section class="panel">
+        <div class="eyebrow" style="margin-bottom: 8px;">Behind This Gift</div>
+        <h2>Song & Dedication Details</h2>
+        <div class="meta-grid">
+          <div class="meta-item"><span>Song Title</span><strong>அவள் தான் (Aval Thaan)</strong></div>
+          <div class="meta-item"><span>Lyrics</span><strong>Written by me</strong></div>
+          <div class="meta-item"><span>Language</span><strong>Tamil (தமிழ்)</strong></div>
+          <div class="meta-item"><span>Style</span><strong>Romantic Melody</strong></div>
+          <div class="meta-item"><span>Dedicated To</span><strong>My Azhagii (My Everything)</strong></div>
+       </section>
+
+      <!-- ATTRACTIVE FOOTER -->
+      <footer class="footer">
+        <div class="eyebrow">Forever & Always</div>
+        <div class="last">You are the only one in my world. ♡</div>
+        <p class="sub">You have a place in my heart that no one else could ever take, Azhagii. Whenever you miss me, press play and let my heart speak to yours.</p>
+        <p style="color: var(--pink); font-size: 14px; font-weight: 500;">I love you Azhagii...</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- This keeps the download fallback available when the page is opened directly in Chrome. -->
+  <script src="./song-data.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const gateScreen = $('gateScreen');
+    const giftScreen = $('giftScreen');
+    const passcodeInput = $('passcodeInput');
+    const gateForm = $('gateForm');
+    const gateStatus = $('gateStatus');
+    const audio = $('audioElement');
+    const playBtn = $('playBtn');
+    const seekSlider = $('seekSlider');
+    const currTime = $('currTime');
+    const totTime = $('totTime');
+    const volSlider = $('volSlider');
+    const waveBars = $('waveBars');
+    const downloadStatus = $('downloadStatus');
+
+    // Floating heart helper
+    function spawnHeart(x, y) {
+      const el = document.createElement('span');
+      el.className = 'floating';
+      el.textContent = Math.random() > 0.4 ? '♡' : '♥';
+      el.style.left = (x || (10 + Math.random() * 80)) + '%';
+      el.style.top = (y || (60 + Math.random() * 25)) + '%';
+      el.style.color = Math.random() > 0.5 ? '#ff9bb6' : '#ffd1bd';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+
+    function burstHearts(count = 16) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => spawnHeart(), i * 80);
+      }
+    }
+
+    // Play chime sound
+    function playChime() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const freqs = [523.25, 659.25, 783.99, 987.77, 1046.5];
+        const now = ctx.currentTime;
+        freqs.forEach((f, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + idx * 0.12);
+          gain.gain.setValueAtTime(0, now + idx * 0.12);
+          gain.gain.linearRampToValueAtTime(0.18, now + idx * 0.12 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 1.2);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 1.3);
+        });
+      } catch (e) {}
+    }
+
+    // Passcode Unlock
+    gateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const code = passcodeInput.value.trim().toLowerCase();
+      if (code === 'azhagii' || code === 'azhagi' || code === 'love') {
+        gateStatus.textContent = '';
+        playChime();
+        burstHearts(24);
+        gateScreen.classList.add('hidden');
+        giftScreen.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        downloadStatus.textContent = 'Your song is ready — press Play whenever you are ready ♡';
+      } else {
+        gateStatus.textContent = 'Not quite, Azhagii. Try once more ♡';
+        passcodeInput.select();
+        burstHearts(4);
+      }
+    });
+
+    $('headerHeartBtn').addEventListener('click', () => burstHearts(10));
+
+    // Audio Player Handling
+    function formatTime(s) {
+      if (isNaN(s) || s <= 0) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().then(() => {
+          playBtn.textContent = '⏸ Pause';
+          waveBars.classList.add('active');
+        }).catch((err) => {
+          downloadStatus.textContent = 'Chrome could not start playback. Use the audio controls below, or check that song.mp3 remains beside index.html.';
+        });
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶ Play Song';
+        waveBars.classList.remove('active');
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      currTime.textContent = formatTime(audio.currentTime);
+      seekSlider.value = audio.currentTime;
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      totTime.textContent = formatTime(audio.duration);
+      seekSlider.max = audio.duration;
+    });
+
+    seekSlider.addEventListener('input', () => {
+      audio.currentTime = seekSlider.value;
+      currTime.textContent = formatTime(audio.currentTime);
+    });
+
+    volSlider.addEventListener('input', () => {
+      audio.volume = volSlider.value;
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶ Play Song';
+      waveBars.classList.remove('active');
+    });
+
+    audio.addEventListener('error', () => {
+      downloadStatus.textContent = 'The MP3 could not be loaded. Keep Aval-Thaan-My-Love.mp3 in the same folder as index.html, then reopen the page.';
+    });
+
+    // Uses the same fetch → Blob → temporary download approach as the reference page.
+    // Chrome blocks fetch from file:// pages, so those pages use the packaged fallback
+    // instead of opening the MP3 in a blank browser tab.
+    function saveBlob(blob) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Aval-Thaan-My-Love.mp3';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    function packagedSongBlob() {
+      if (!window.songData) throw new Error('Packaged song data is unavailable');
+      const raw = atob(window.songData);
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      return new Blob([bytes], { type: 'audio/mpeg' });
+    }
+
+    async function triggerDownload() {
+      downloadStatus.textContent = 'Preparing your song download…';
+      try {
+        const response = await fetch('./Aval-Thaan-My-Love.mp3');
+        if (!response.ok) throw new Error('Song file was not found');
+        saveBlob(await response.blob());
+      } catch (error) {
+        saveBlob(packagedSongBlob());
+      }
+      downloadStatus.textContent = 'Song download started! Keep it with you forever ♡';
+      burstHearts(12);
+      setTimeout(() => { downloadStatus.textContent = ''; }, 6000);
+    }
+
+    $('downloadSongBtn').addEventListener('click', triggerDownload);
+
+    // Show or collapse the complete lyrics without affecting the rest of the page.
+    $('toggleLyricsBtn').addEventListener('click', () => {
+      const lyrics = $('lyricsTextContainer');
+      const isHidden = lyrics.classList.toggle('hidden');
+      const button = $('toggleLyricsBtn');
+      button.textContent = isHidden ? '⌄ Show Lyrics' : '⌃ Hide Lyrics';
+      button.setAttribute('aria-expanded', String(!isHidden));
+    });
+
+    // Copy Lyrics
+    $('copyLyricsBtn').addEventListener('click', async () => {
+      const text = $('lyricsTextContainer').innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        $('copyStatus').textContent = 'Lyrics copied to your clipboard ♡';
+      } catch (e) {
+        $('copyStatus').textContent = 'Please select and copy the text directly.';
+      }
+      setTimeout(() => { $('copyStatus').textContent = ''; }, 4000);
+    });
+
+    // Feel love button
+    $('feelLoveBtn').addEventListener('click', () => {
+      burstHearts(28);
+      $('secretNote').textContent = "✨ If you could feel my heart for a moment, you'd know just how deeply you're loved, my Azhagii. ♡";
+    });
+  </script>
+</body>
+</html>
